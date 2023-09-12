@@ -2,12 +2,11 @@ import { useContext } from "react";
 import "./button-3d.styles.css";
 import { MyContext } from "../../App";
 
-export default function Button3d({ color, changeRoute, to }) {
+export default function Button3d({ color, to }) {
   const contextData = useContext(MyContext);
   const { setPage } = contextData;
 
   function changeMyRoute() {
-    console.log("route changed to", to);
     setPage(to);
   }
   return (

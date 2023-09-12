@@ -1,22 +1,22 @@
 import { useState, createContext } from "react";
 import "./globalStyles.css";
-import Home from "./pages/Home/Home.component.jsx";
+import Home from "./pages/home/Home.component.jsx";
 import Header from "./components/header/header.component.jsx";
+import SelectGame from "./pages/selectGame/selectGame.component";
 
 export const MyContext = createContext();
 
 function App() {
   const [page, setPage] = useState("home");
+  const [currentUser, setCurrentUser] = useState(null);
 
   function pageRender() {
-    if (page === "home") return <Home route={page} changeRoute={setPage} />;
-    else {
-      if (page !== "home") return <p>you are not at home</p>;
-    }
+    if (page === "home") return <Home />;
+    else if (page === "select-game") return <SelectGame />;
   }
 
   return (
-    <MyContext.Provider value={{ page, setPage }}>
+    <MyContext.Provider value={{ setPage, currentUser, setCurrentUser }}>
       <div>
         <Header></Header>
         {pageRender()}
