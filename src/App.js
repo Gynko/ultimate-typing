@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, createContext } from "react";
 import "./globalStyles.css";
-
 import Home from "./pages/Home/Home.component.jsx";
 import Header from "./components/header/header.component.jsx";
+
+export const MyContext = createContext();
 
 function App() {
   const [page, setPage] = useState("home");
@@ -15,10 +16,12 @@ function App() {
   }
 
   return (
-    <div>
-      <Header></Header>
-      {pageRender()}
-    </div>
+    <MyContext.Provider value={{ page, setPage }}>
+      <div>
+        <Header></Header>
+        {pageRender()}
+      </div>
+    </MyContext.Provider>
   );
 }
 
