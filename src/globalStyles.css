@@ -1,5 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jomhuria&family=Jost&family=Luckiest+Guy&display=swap");
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input {
+  border: none;
+  outline: none;
+}
+
+:root {
+  /* Colors */
+  --color-header: #4f3856;
+  --color-header-links: #ffffff;
+  --color-button-enter: #008024;
+  --color-button-nav: #e2e09e;
+
+  /* Fonts */
+  --font-text: "Courier Prime", monospace;
+  --font-button: "Luckiest Guy", cursive;
+
+  /* Sizes */
+  --size-header: 5rem;
 }

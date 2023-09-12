@@ -1,0 +1,40 @@
+.home-background {
+  background: linear-gradient(197deg, #58bfeb 11.32%, #23a47d 88.2%);
+  min-height: calc(100vh - var(--size-header));
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.inputs-container {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 45vw;
+  align-items: center;
+  gap: 2rem;
+}
+
+.inputs-sk {
+  width: 70%;
+}
+
+.inputs-sk::placeholder {
+  color: rgb(62, 56, 56);
+}
+
+.inputs-sk {
+  border: none;
+  text-align: center;
+}
+
+.input-text {
+  font-size: 2rem;
+  height: 5rem;
+  border-radius: 15px;
+  font-family: "Courier Prime", monospace;
+  color: black;
+  box-shadow: rgba(45, 35, 66, 0.4) -2px 6px 7px,
+    rgba(45, 35, 66, 0.3) 3px 6px 13px -3px, #d6d6e7 -1px -6px 0 inset;
+}
