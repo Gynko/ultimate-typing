@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jomhuria&family=Jost&family=Luckiest+Guy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Belleza&display=swap");
 
 * {
   box-sizing: border-box;
@@ -23,10 +24,13 @@ input {
   --color-header-links: #ffffff;
   --color-button-enter: #008024;
   --color-button-nav: #e2e09e;
+  --color-button-inactive: #c8c8bd;
+  --color-button-red: #db3d3d;
 
   /* Fonts */
   --font-text: "Courier Prime", monospace;
   --font-button: "Luckiest Guy", cursive;
+  --font-logo-ultimate: "Belleza", sans-serif;
 
   /* Sizes */
   --size-header: 5rem;

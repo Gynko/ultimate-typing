@@ -8,7 +8,7 @@ export const MyContext = createContext();
 
 function App() {
   const [page, setPage] = useState("home");
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState("");
 
   function pageRender() {
     if (page === "home") return <Home />;
