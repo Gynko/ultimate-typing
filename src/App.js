@@ -12,7 +12,7 @@ function App() {
   const [page, setPage] = useState("game-words");
   const [currentUser, setCurrentUser] = useState("Bobby");
   const [gameMode, setGameMode] = useState("game-words");
-  const [theme, setTheme] = useState("oktoberfest");
+  const [theme, setTheme] = useState("cancerAwareness");
   const [timer, setTimer] = useState(120);
 
   function pageRender() {

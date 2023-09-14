@@ -17,25 +17,32 @@ export default function GameWords() {
   const { theme } = contextData;
   const [showWordsContainer, setShowWordsContainer] = useState(false);
   const inputRef = useRef(null);
+  const [wordToGuess, setWordToGuess] = useState([]);
+  const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
-    // Set a delay to show the words container
     const delay = setTimeout(() => {
       setShowWordsContainer(true);
     }, 3000);
 
-    // Clean up the timeout when the component unmounts
     return () => {
       clearTimeout(delay);
     };
   }, []);
 
   useEffect(() => {
-    // Check if showWordsContainer is true and inputRef.current exists
     if (showWordsContainer && inputRef.current) {
       inputRef.current.focus();
+      getRandomWord();
     }
   }, [showWordsContainer]);
+
+  function getRandomWord() {
+    getList();
+    const randomIndex = Math.floor(Math.random() * listOfWords.length);
+    setWordToGuess(listOfWords[randomIndex].split(""));
+  }
 
   let listOfWords;
   function getList() {
@@ -46,25 +53,44 @@ export default function GameWords() {
     }
   }
 
-  function getRandomWord() {
-    getList();
-    const randomIndex = Math.floor(Math.random() * listOfWords.length);
-    return listOfWords[randomIndex];
+  function checkInput(event) {
+    const inputValue = event.target.value;
+    let newScore = 0; // Temp variable to hold the new score
+
+    if (inputValue.length <= wordToGuess.length) {
+      let updatedWord = "";
+
+      for (let index = 0; index < wordToGuess.length; index++) {
+        let scoreDisplay = "";
+
+        if (inputValue[index] === undefined) {
+          updatedWord += "_";
+        } else if (inputValue[index] !== wordToGuess[index]) {
+          newScore -= 1; // Subtract 1 from score for incorrect letter
+          scoreDisplay = '<span class="score-display wrong-score">-1</span>';
+          updatedWord += `<span class="wrong-letter">${inputValue[index]}</span>${scoreDisplay}`;
+        } else {
+          newScore += 1; // Add 1 to score for correct letter
+          scoreDisplay = '<span class="score-display correct-score">+1</span>';
+          updatedWord += `${inputValue[index]}${scoreDisplay}`;
+        }
+      }
+
+      setWordAsUnderscores(updatedWord);
+      setScore(newScore); // Update the score state with the new score
+    }
   }
 
-  function Game() {
-    const randomWord = getRandomWord();
-    return randomWord;
-  }
-
-  // I get the random word
-  // Then I show the word
-  // Then I show the word with spacings
-  // Then I start the countdown
-  // Then I get the first input
-  // I Check if matches the first letter
-  // If so I trigger the +1 points, if not -1
-  // Go to second
+  useEffect(() => {
+    function wordToUnderscores() {
+      const initialUnderscores = Array.from(
+        { length: wordToGuess.length },
+        () => "_"
+      ).join("");
+      setWordAsUnderscores(initialUnderscores);
+    }
+    wordToUnderscores();
+  }, [wordToGuess]);
 
   function renderImage() {
     if (theme === "oktoberfest") {
@@ -80,14 +106,17 @@ export default function GameWords() {
         <img
           src={cancerAwarenessImage}
           alt="cancer awareness with ribbon"
-          className="game-image-left"
+          className="game-image-left "
         />
       );
     }
   }
 
-  function inputRender() {}
-
+  function preventBackspace(event) {
+    if (event.key === "Backspace") {
+      event.preventDefault();
+    }
+  }
   return (
     <div className={`game-background game-background-${theme}`}>
       <div className="game-image-and-game-container">
@@ -97,14 +126,22 @@ export default function GameWords() {
           <Countdown />
           {showWordsContainer && (
             <div className="game-words-container">
-              <p className="game-word-to-write">{Game()}</p>
+              <p className="game-word-to-write">{wordToGuess.join("")}</p>
+              <p
+                className="game-word-to-write"
+                dangerouslySetInnerHTML={{ __html: wordAsUnderscores }}
+              ></p>
+
               <input
                 ref={inputRef}
                 type="text"
-                className="game-word-being-written"
+                onChange={checkInput}
+                className="game-word-being-written hide-caret"
+                onKeyDown={preventBackspace}
               />
             </div>
           )}
+          <p>SCORE: {score}</p>
         </div>
       </div>
     </div>
