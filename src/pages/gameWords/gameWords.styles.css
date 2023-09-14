@@ -42,10 +42,13 @@
   font-size: 4rem;
   font-family: var(--font-text);
   text-align: center;
+  letter-spacing: 1.3rem;
 }
 
 .game-word-being-written {
   font-size: 4rem;
   font-family: var(--font-text);
   text-align: center;
+  letter-spacing: 1.3rem;
+  background: none;
 }

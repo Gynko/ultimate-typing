@@ -1,26 +1,59 @@
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
+
 import "./gameWords.styles.css";
+
 import oktoberfestImage from "../../assets/images/octoberfest.jpeg";
 import cancerAwarenessImage from "../../assets/images/cancer.jpg";
+
 import Timer from "../../components/timer/timer.component";
 import Countdown from "../../components/countdown/countdown.component";
 
+import oktoberJson from "../../data/Oktoberfest.json";
+import cancerJson from "../../data/CancerAwareness.json";
+
 export default function GameWords() {
   const contextData = useContext(MyContext);
-  const { theme, gameMode } = contextData;
+  const { theme } = contextData;
   const [showWordsContainer, setShowWordsContainer] = useState(false);
 
-  // Use useEffect to delay the appearance of game-words-container
   useEffect(() => {
     const delay = setTimeout(() => {
       setShowWordsContainer(true);
-    }, 3000); // Delay for 3 seconds
+    }, 3000);
 
     return () => {
-      clearTimeout(delay); // Clear the timeout if the component unmounts early
+      clearTimeout(delay);
     };
   }, []);
+
+  let list = [];
+  function getList(list) {
+    if (theme === "oktoberfest") {
+      list = oktoberJson.ord;
+    } else if (theme === "cancerAwareness") {
+      list = cancerJson.ord;
+    }
+  }
+
+  function getRandomWord(list) {
+    getList(list);
+    const randomIndex = Math.floor(Math.random() * list.length);
+    return list[randomIndex];
+  }
+
+  function Game() {
+    const randomWord = getRandomWord();
+  }
+
+  // I get the random word
+  // Then I show the word
+  // Then I show the word with spacings
+  // Then I start the countdown
+  // Then I get the first input
+  // I Check if matches the first letter
+  // If so I trigger the +1 points, if not -1
+  // Go to second
 
   function renderImage() {
     if (theme === "oktoberfest") {
@@ -51,8 +84,8 @@ export default function GameWords() {
           <Countdown />
           {showWordsContainer && (
             <div className="game-words-container">
-              <p className="game-word-to-write">WITCH</p>
-              <p className="game-word-being-written">_ _ _ _ _</p>
+              <p className="game-word-to-write">{}</p>
+              <input type="text" className="game-word-being-written" />
             </div>
           )}
         </div>
