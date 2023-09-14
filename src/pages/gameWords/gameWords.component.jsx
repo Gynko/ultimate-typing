@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { MyContext } from "../../App";
 
 import "./gameWords.styles.css";
@@ -16,34 +16,45 @@ export default function GameWords() {
   const contextData = useContext(MyContext);
   const { theme } = contextData;
   const [showWordsContainer, setShowWordsContainer] = useState(false);
+  const inputRef = useRef(null);
 
   useEffect(() => {
+    // Set a delay to show the words container
     const delay = setTimeout(() => {
       setShowWordsContainer(true);
     }, 3000);
 
+    // Clean up the timeout when the component unmounts
     return () => {
       clearTimeout(delay);
     };
   }, []);
 
-  let list = [];
-  function getList(list) {
+  useEffect(() => {
+    // Check if showWordsContainer is true and inputRef.current exists
+    if (showWordsContainer && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [showWordsContainer]);
+
+  let listOfWords;
+  function getList() {
     if (theme === "oktoberfest") {
-      list = oktoberJson.ord;
+      listOfWords = oktoberJson.ord;
     } else if (theme === "cancerAwareness") {
-      list = cancerJson.ord;
+      listOfWords = cancerJson.ord;
     }
   }
 
-  function getRandomWord(list) {
-    getList(list);
-    const randomIndex = Math.floor(Math.random() * list.length);
-    return list[randomIndex];
+  function getRandomWord() {
+    getList();
+    const randomIndex = Math.floor(Math.random() * listOfWords.length);
+    return listOfWords[randomIndex];
   }
 
   function Game() {
     const randomWord = getRandomWord();
+    return randomWord;
   }
 
   // I get the random word
@@ -75,6 +86,8 @@ export default function GameWords() {
     }
   }
 
+  function inputRender() {}
+
   return (
     <div className={`game-background game-background-${theme}`}>
       <div className="game-image-and-game-container">
@@ -84,8 +97,12 @@ export default function GameWords() {
           <Countdown />
           {showWordsContainer && (
             <div className="game-words-container">
-              <p className="game-word-to-write">{}</p>
-              <input type="text" className="game-word-being-written" />
+              <p className="game-word-to-write">{Game()}</p>
+              <input
+                ref={inputRef}
+                type="text"
+                className="game-word-being-written"
+              />
             </div>
           )}
         </div>
