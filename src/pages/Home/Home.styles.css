@@ -1,4 +1,5 @@
 .home-background {
+  margin-top: var(--size-header);
   background: linear-gradient(197deg, #58bfeb 11.32%, #23a47d 88.2%);
   min-height: calc(100vh - var(--size-header));
   display: flex;

@@ -1,0 +1,22 @@
+.title-line1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-family: var(--font-button);
+  z-index: 1;
+  position: relative;
+  color: white;
+  padding: 0.5rem 1rem 0 1rem;
+}
+.title-line2 {
+  display: block;
+}
+
+.container-title {
+  background-color: rgb(58, 52, 48);
+  border-radius: 10px;
+  width: 33rem;
+  height: 6rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}

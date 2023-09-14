@@ -1,9 +1,14 @@
 .select-game-background {
+  margin-top: var(--size-header);
   background: linear-gradient(197deg, #58bfeb 11.32%, #23a47d 88.2%);
   min-height: calc(100vh - var(--size-header));
   display: flex;
   width: 100%;
   flex-flow: row nowrap;
-  align-items: center;
   justify-content: space-evenly;
+}
+
+.main-title {
+  font-family: var(--font-logo-ultimate);
+  margin-top: 1rem;
 }

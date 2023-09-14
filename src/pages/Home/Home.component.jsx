@@ -18,7 +18,6 @@ export default function Home() {
 
   function handleInputChange(event) {
     setInputValue(event.target.value);
-    console.log("input value", inputValue);
   }
 
   return (

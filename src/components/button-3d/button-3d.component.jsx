@@ -1,6 +1,6 @@
 import "./button-3d.styles.css";
 
-export default function Button3d({ color, size, text, type, click }) {
+export default function Button3d({ color, size, text, type, click, ...other }) {
   return (
     <button
       type={type}

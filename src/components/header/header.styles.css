@@ -4,6 +4,9 @@
   height: var(--size-header);
 }
 .header-sk {
+  position: fixed;
+  top: 0;
+  width: 100%;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;

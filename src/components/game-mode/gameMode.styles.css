@@ -1,0 +1,47 @@
+.gamemode-container {
+}
+
+.gamemode-picture {
+  border-radius: 20px;
+}
+
+.gamemode-button {
+  background: none;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 20px;
+}
+
+.gamemode-text-container {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 6rem;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  max-width: 20rem;
+  padding: 0.5rem;
+}
+
+.gamemode-text-container-right {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.gamemode-text-container-left {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.gamemode-text-h2 {
+  font-family: var(--font-text);
+  font-size: 2rem;
+}
+
+.gamemode-text-p {
+  font-family: var(--font-text);
+  font-size: 1rem;
+}

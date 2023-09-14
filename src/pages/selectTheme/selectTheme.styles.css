@@ -1,0 +1,30 @@
+.selecttheme-background {
+  margin-top: var(--size-header);
+  background: linear-gradient(197deg, #58bfeb 11.32%, #23a47d 88.2%);
+  min-height: calc(100vh - var(--size-header));
+  display: flex;
+  width: 100%;
+  flex-flow: column nowrap;
+}
+
+.select-theme-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.themes-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+}
+
+.selecttheme-button-start-container {
+  margin-top: 2rem;
+}

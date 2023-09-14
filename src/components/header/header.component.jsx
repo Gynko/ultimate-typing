@@ -6,12 +6,17 @@ import Button3d from "../button-3d/button-3d.component";
 
 export default function Header() {
   const contextData = useContext(MyContext);
+  const { setCurrentUser, setPage } = contextData;
   const { currentUser } = contextData;
   const buttonOpacity = currentUser === "" ? 0 : 1;
 
   function logout() {
-    contextData.setCurrentUser("");
-    contextData.setPage("home");
+    setCurrentUser("");
+    setPage("home");
+  }
+
+  function gotoLink(link) {
+    setPage(link);
   }
 
   return (
@@ -43,6 +48,7 @@ export default function Header() {
                 to="select-game"
                 size="small"
                 text="Choose game"
+                click={() => gotoLink("select-game")}
               />
             </li>
             <li
@@ -57,6 +63,7 @@ export default function Header() {
                 to="select-game"
                 size="small"
                 text="Leaderboard"
+                click={() => gotoLink("trivia")}
               />
             </li>
           </div>
