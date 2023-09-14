@@ -9,10 +9,11 @@ import RadioImageSelector from "../../components/radioImageSelector/radioImageSe
 
 export default function SelectTheme() {
   const contextData = useContext(MyContext);
-  const { theme, setTheme, setPage } = contextData;
+  const { theme, gameMode, setPage } = contextData;
 
   function handleButtonStart() {
-    setPage("");
+    console.log(gameMode);
+    setPage(gameMode);
   }
 
   const choices = [

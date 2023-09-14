@@ -1,0 +1,32 @@
+.countdown-container {
+  width: 20rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.countdown {
+  font-family: var(--font-button);
+  font-size: 3rem;
+  margin-top: 0.6rem;
+  color: black;
+}
+
+.countdown-3 {
+    border: 0.5rem solid red;
+}
+
+.countdown-2 {
+    border: 0.5rem solid rgb(255, 153, 0);
+}
+
+.countdown-1 {
+    border: 0.5rem solid rgb(251, 255, 3);
+}
+
+.countdown-0 {
+  border: 0.5rem solid rgb(62, 172, 29);
+}

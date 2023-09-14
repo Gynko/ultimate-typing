@@ -21,7 +21,7 @@ export default function GameMode({
       {orientation === "right" ? (
         <button
           className="gamemode-button"
-          onClick={() => onButtonClick("word attack")}
+          onClick={() => onButtonClick("game-words")}
         >
           <img className="gamemode-picture" src={image} width="150" alt={alt} />
           <div
@@ -34,7 +34,7 @@ export default function GameMode({
       ) : (
         <button
           className="gamemode-button"
-          onClick={() => onButtonClick("trivia")}
+          onClick={() => onButtonClick("game-trivia")}
         >
           <div
             className={`gamemode-text-container gamemode-text-container-${orientation}`}

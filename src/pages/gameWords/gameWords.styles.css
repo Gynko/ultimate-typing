@@ -1,0 +1,51 @@
+.game-background {
+  margin-top: var(--size-header);
+  background: linear-gradient(197deg, #58bfeb 11.32%, #23a47d 88.2%);
+  min-height: calc(100vh - var(--size-header));
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.game-background-oktoberfest {
+  background: linear-gradient(197deg, #ebc658 11.32%, #a44c23 88.2%);
+}
+
+.game-background-cancer-Awareness {
+  background: linear-gradient(197deg, #e958eb 11.32%, #7a185d 88.2%);
+}
+
+.game-image-and-game-container {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.game-image-container {
+  height: calc(100vh - var(--size-header));
+}
+
+.game-container {
+  width: calc(100% - 10rem);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin-top: 7rem;
+}
+
+.game-image-left {
+  height: 100%;
+}
+
+.game-words-container {
+}
+.game-word-to-write {
+  font-size: 4rem;
+  font-family: var(--font-text);
+  text-align: center;
+}
+
+.game-word-being-written {
+  font-size: 4rem;
+  font-family: var(--font-text);
+  text-align: center;
+}
