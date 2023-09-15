@@ -18,7 +18,7 @@ export default function GameWords() {
   const { theme } = contextData;
 
   const showWordsContainer = useShowCountdown(3000);
-  const listOfWords = useListOfWords(theme);
+  let listOfWords = useListOfWords(theme);
   const wordToGuess = useRandomWord(theme, listOfWords);
   const wordAsUnderscores = useWordUnderscores(wordToGuess);
 
