@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { MyContext } from "../../App";
 
 import "./gameWords.styles.css";
@@ -9,61 +9,20 @@ import cancerAwarenessImage from "../../assets/images/cancer.jpg";
 import Timer from "../../components/timer/timer.component";
 import Countdown from "../../components/countdown/countdown.component";
 
-import oktoberJson from "../../data/Oktoberfest.json";
-import cancerJson from "../../data/CancerAwareness.json";
+import { useShowCountdown } from "../../hooks/useShowCountdown";
+import { useRandomWord } from "../../hooks/useRandomWord";
+import { useKeyboardInput } from "../../hooks/useKeyboardInput";
 
 export default function GameWords() {
   const contextData = useContext(MyContext);
   const { theme } = contextData;
-  const [showWordsContainer, setShowWordsContainer] = useState(false);
-  const [wordToGuess, setWordToGuess] = useState([]);
-
-  // Showing the words after the 3s countdown is finished
-  useEffect(() => {
-    const delay = setTimeout(() => {
-      setShowWordsContainer(true);
-    }, 3000);
-
-    return () => {
-      clearTimeout(delay);
-    };
-  }, []);
-
-  function getRandomWord() {
-    getList();
-    const randomIndex = Math.floor(Math.random() * listOfWords.length);
-    setWordToGuess(listOfWords[randomIndex].split(""));
-  }
-
-  let listOfWords;
-  function getList() {
-    if (theme === "oktoberfest") {
-      listOfWords = oktoberJson.ord;
-    } else if (theme === "cancerAwareness") {
-      listOfWords = cancerJson.ord;
-    }
-  }
-
-  useEffect(() => {
-    getRandomWord();
-  }, []);
+  const showWordsContainer = useShowCountdown(3000);
+  const wordToGuess = useRandomWord(theme);
 
   function listenToKeyboardInputs(event) {
     console.log("Key pressed:", event.key);
   }
-
-  // Listen to keyboard inputs only after 3s delay
-  useEffect(() => {
-    if (showWordsContainer) {
-      // Attach event listener
-      window.addEventListener("keydown", listenToKeyboardInputs);
-
-      // Cleanup
-      return () => {
-        window.removeEventListener("keydown", listenToKeyboardInputs);
-      };
-    }
-  }, [showWordsContainer]);
+  useKeyboardInput(listenToKeyboardInputs, showWordsContainer);
 
   function renderImage() {
     if (theme === "oktoberfest") {
