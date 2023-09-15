@@ -19,7 +19,9 @@ export default function GameWords() {
   const inputRef = useRef(null);
   const [wordToGuess, setWordToGuess] = useState([]);
   const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
-  const [score, setScore] = useState(0);
+  // Score system
+  const [wordScore, setWordScore] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
 
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -55,29 +57,27 @@ export default function GameWords() {
 
   function checkInput(event) {
     const inputValue = event.target.value;
-    let newScore = 0; // Temp variable to hold the new score
+    let newScore = 0;
 
     if (inputValue.length <= wordToGuess.length) {
       let updatedWord = "";
 
       for (let index = 0; index < wordToGuess.length; index++) {
         let scoreDisplay = "";
-
         if (inputValue[index] === undefined) {
           updatedWord += "_";
         } else if (inputValue[index] !== wordToGuess[index]) {
-          newScore -= 1; // Subtract 1 from score for incorrect letter
+          newScore -= 1;
           scoreDisplay = '<span class="score-display wrong-score">-1</span>';
           updatedWord += `<span class="wrong-letter">${inputValue[index]}</span>${scoreDisplay}`;
         } else {
-          newScore += 1; // Add 1 to score for correct letter
+          newScore += 1;
           scoreDisplay = '<span class="score-display correct-score">+1</span>';
           updatedWord += `${inputValue[index]}${scoreDisplay}`;
         }
       }
-
       setWordAsUnderscores(updatedWord);
-      setScore(newScore); // Update the score state with the new score
+      setWordScore(newScore);
     }
   }
 
@@ -141,7 +141,7 @@ export default function GameWords() {
               />
             </div>
           )}
-          <p>SCORE: {score}</p>
+          <p>SCORE: {wordScore}</p>
         </div>
       </div>
     </div>
