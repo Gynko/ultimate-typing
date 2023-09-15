@@ -16,13 +16,9 @@ export default function GameWords() {
   const contextData = useContext(MyContext);
   const { theme } = contextData;
   const [showWordsContainer, setShowWordsContainer] = useState(false);
-  const inputRef = useRef(null);
   const [wordToGuess, setWordToGuess] = useState([]);
-  const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
-  // Score system
-  const [wordScore, setWordScore] = useState(0);
-  const [totalScore, setTotalScore] = useState(0);
 
+  // Showing the words after the 3s countdown is finished
   useEffect(() => {
     const delay = setTimeout(() => {
       setShowWordsContainer(true);
@@ -32,13 +28,6 @@ export default function GameWords() {
       clearTimeout(delay);
     };
   }, []);
-
-  useEffect(() => {
-    if (showWordsContainer && inputRef.current) {
-      inputRef.current.focus();
-      getRandomWord();
-    }
-  }, [showWordsContainer]);
 
   function getRandomWord() {
     getList();
@@ -55,42 +44,26 @@ export default function GameWords() {
     }
   }
 
-  function checkInput(event) {
-    const inputValue = event.target.value;
-    let newScore = 0;
+  useEffect(() => {
+    getRandomWord();
+  }, []);
 
-    if (inputValue.length <= wordToGuess.length) {
-      let updatedWord = "";
-
-      for (let index = 0; index < wordToGuess.length; index++) {
-        let scoreDisplay = "";
-        if (inputValue[index] === undefined) {
-          updatedWord += "_";
-        } else if (inputValue[index] !== wordToGuess[index]) {
-          newScore -= 1;
-          scoreDisplay = '<span class="score-display wrong-score">-1</span>';
-          updatedWord += `<span class="wrong-letter">${inputValue[index]}</span>${scoreDisplay}`;
-        } else {
-          newScore += 1;
-          scoreDisplay = '<span class="score-display correct-score">+1</span>';
-          updatedWord += `${inputValue[index]}${scoreDisplay}`;
-        }
-      }
-      setWordAsUnderscores(updatedWord);
-      setWordScore(newScore);
-    }
+  function listenToKeyboardInputs(event) {
+    console.log("Key pressed:", event.key);
   }
 
+  // Listen to keyboard inputs only after 3s delay
   useEffect(() => {
-    function wordToUnderscores() {
-      const initialUnderscores = Array.from(
-        { length: wordToGuess.length },
-        () => "_"
-      ).join("");
-      setWordAsUnderscores(initialUnderscores);
+    if (showWordsContainer) {
+      // Attach event listener
+      window.addEventListener("keydown", listenToKeyboardInputs);
+
+      // Cleanup
+      return () => {
+        window.removeEventListener("keydown", listenToKeyboardInputs);
+      };
     }
-    wordToUnderscores();
-  }, [wordToGuess]);
+  }, [showWordsContainer]);
 
   function renderImage() {
     if (theme === "oktoberfest") {
@@ -112,11 +85,6 @@ export default function GameWords() {
     }
   }
 
-  function preventBackspace(event) {
-    if (event.key === "Backspace") {
-      event.preventDefault();
-    }
-  }
   return (
     <div className={`game-background game-background-${theme}`}>
       <div className="game-image-and-game-container">
@@ -127,21 +95,8 @@ export default function GameWords() {
           {showWordsContainer && (
             <div className="game-words-container">
               <p className="game-word-to-write">{wordToGuess.join("")}</p>
-              <p
-                className="game-word-to-write"
-                dangerouslySetInnerHTML={{ __html: wordAsUnderscores }}
-              ></p>
-
-              <input
-                ref={inputRef}
-                type="text"
-                onChange={checkInput}
-                className="game-word-being-written hide-caret"
-                onKeyDown={preventBackspace}
-              />
             </div>
           )}
-          <p>SCORE: {wordScore}</p>
         </div>
       </div>
     </div>
