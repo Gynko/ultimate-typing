@@ -32,12 +32,6 @@
   margin-top: 7rem;
 }
 
-.game-image-left {
-  height: 100%;
-}
-
-.game-words-container {
-}
 .game-word-to-write {
   font-size: 2.5rem;
   font-family: var(--font-text);
