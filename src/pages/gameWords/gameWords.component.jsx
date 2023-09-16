@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { MyContext } from "../../App";
 // Styles
 import "./gameWords.styles.css";
@@ -18,15 +18,30 @@ export default function GameWords() {
   const { theme } = contextData;
 
   const showWordsContainer = useShowCountdown(3000);
-  let listOfWords = useListOfWords(theme);
+
+  const [wordToRemove, setWordToRemove] = useState(null);
+  let listOfWords = useListOfWords(theme, wordToRemove);
   const wordToGuess = useRandomWord(theme, listOfWords);
-  const wordAsUnderscores = useWordUnderscores(wordToGuess);
+
+  const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
+  useEffect(() => {
+    const newWordAsUnderscores = Array.from(
+      { length: wordToGuess.length },
+      () => "_"
+    );
+    setWordAsUnderscores(newWordAsUnderscores);
+  }, [wordToGuess]);
 
   const [wordIndex, setWordIndex] = useState(0);
 
+  function removeWordFromList(word) {
+    setWordToRemove(word);
+    let index = 0;
+    setWordIndex(index);
+  }
+
   function listenToKeyboardInputs(event) {
     const keyPressed = event.key;
-
     if (/\p{Letter}/u.test(keyPressed) && keyPressed.length === 1) {
       // Update the next score and the display based on the key pressed
       if (keyPressed === wordToGuess[wordIndex]) {
@@ -44,12 +59,15 @@ export default function GameWords() {
           </React.Fragment>
         );
       }
-
       let newWordIndex = wordIndex + 1;
       setWordIndex(newWordIndex);
-
       if (newWordIndex === wordToGuess.length) {
-        console.log("word finished");
+        console.log("word finished", listOfWords);
+        let word = wordToGuess.join("");
+        removeWordFromList(word);
+        setTimeout(() => {
+          console.log("word removed", listOfWords);
+        }, 0);
       }
     }
   }

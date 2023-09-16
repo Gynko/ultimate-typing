@@ -18,6 +18,6 @@ export function useListOfWords(theme, wordToRemove) {
         setList(cancerJson.ord.filter((word) => word !== wordToRemove));
       }
     }
-  }, [theme]);
+  }, [theme, wordToRemove]);
   return list;
 }
