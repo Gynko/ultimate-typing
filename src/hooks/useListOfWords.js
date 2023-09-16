@@ -11,13 +11,13 @@ export function useListOfWords(theme, wordToRemove) {
       } else if (theme === "cancerAwareness") {
         setList(cancerJson.ord);
       }
-    } else {
-      if (theme === "oktoberfest") {
-        setList(oktoberJson.ord.filter((word) => word !== wordToRemove));
-      } else if (theme === "cancerAwareness") {
-        setList(cancerJson.ord.filter((word) => word !== wordToRemove));
-      }
     }
   }, [theme, wordToRemove]);
+
+  useEffect(() => {
+    if (wordToRemove) {
+      setList((prevList) => prevList.filter((word) => word !== wordToRemove));
+    }
+  }, [wordToRemove]);
   return list;
 }

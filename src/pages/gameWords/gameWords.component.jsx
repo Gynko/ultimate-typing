@@ -10,8 +10,7 @@ import RenderImage from "../../components/renderImage/renderImage.components";
 import { useShowCountdown } from "../../hooks/useShowCountdown";
 import { useRandomWord } from "../../hooks/useRandomWord";
 import { useKeyboardInput } from "../../hooks/useKeyboardInput";
-import { useListOfWords } from "../../hooks/useThemeArray";
-import { useWordUnderscores } from "../../hooks/useWordUnderscores";
+import { useListOfWords } from "../../hooks/useListOfWords";
 
 export default function GameWords() {
   const contextData = useContext(MyContext);
@@ -40,7 +39,7 @@ export default function GameWords() {
     setWordIndex(index);
   }
 
-  function listenToKeyboardInputs(event) {
+  function listenInputsWriteOutputs(event) {
     const keyPressed = event.key;
     if (/\p{Letter}/u.test(keyPressed) && keyPressed.length === 1) {
       // Update the next score and the display based on the key pressed
@@ -72,7 +71,7 @@ export default function GameWords() {
     }
   }
 
-  useKeyboardInput(listenToKeyboardInputs, showWordsContainer);
+  useKeyboardInput(listenInputsWriteOutputs, showWordsContainer);
 
   return (
     <div className={`game-background game-background-${theme}`}>
