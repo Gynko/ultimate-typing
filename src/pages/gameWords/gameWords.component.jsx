@@ -14,13 +14,43 @@ import { useListOfWords } from "../../hooks/useListOfWords";
 
 export default function GameWords() {
   const contextData = useContext(MyContext);
-  const { theme } = contextData;
+  const { theme, timer, setTimer } = contextData;
 
   const showWordsContainer = useShowCountdown(3000);
 
   const [wordToRemove, setWordToRemove] = useState(null);
+  const [wordsRemaining, setWordsRemaining] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
+
   let listOfWords = useListOfWords(theme, wordToRemove);
   const wordToGuess = useRandomWord(theme, listOfWords);
+
+  // Timer logic
+  useEffect(() => {
+    let timerId;
+    if (showWordsContainer) {
+      // Only start the timer after the initial countdown
+      timerId = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer > 0) {
+            return prevTimer - 1;
+          } else {
+            clearInterval(timerId);
+            return 0;
+          }
+        });
+      }, 1000);
+    }
+    return () => {
+      if (timerId) {
+        clearInterval(timerId);
+      }
+    };
+  }, [showWordsContainer]);
+
+  useEffect(() => {
+    setWordsRemaining(listOfWords.length);
+  }, [listOfWords]);
 
   const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
   useEffect(() => {
@@ -30,8 +60,6 @@ export default function GameWords() {
     );
     setWordAsUnderscores(newWordAsUnderscores);
   }, [wordToGuess]);
-
-  const [wordIndex, setWordIndex] = useState(0);
 
   function removeWordFromList(word) {
     setWordToRemove(word);
@@ -61,12 +89,8 @@ export default function GameWords() {
       let newWordIndex = wordIndex + 1;
       setWordIndex(newWordIndex);
       if (newWordIndex === wordToGuess.length) {
-        console.log("word finished", listOfWords);
         let word = wordToGuess.join("");
         removeWordFromList(word);
-        setTimeout(() => {
-          console.log("word removed", listOfWords);
-        }, 0);
       }
     }
   }
@@ -78,6 +102,7 @@ export default function GameWords() {
       <div className="game-image-and-game-container">
         <RenderImage theme={theme} />
         <div className="game-container">
+          <p>Words remaining: {wordsRemaining}</p>
           <Timer />
           <Countdown />
           {showWordsContainer && (
