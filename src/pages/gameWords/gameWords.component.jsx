@@ -21,9 +21,17 @@ export default function GameWords() {
   const [wordToRemove, setWordToRemove] = useState(null);
   const [wordsRemaining, setWordsRemaining] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
+  const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
 
   let listOfWords = useListOfWords(theme, wordToRemove);
   const wordToGuess = useRandomWord(theme, listOfWords);
+
+  // Score
+  const [score, setScore] = useState(0);
+  const [perfectWordsInARow, setperfectWordsInARow] = useState(0);
+  const [wordScore, setWordScore] = useState(0);
+  const perfectWord = 50;
+  const threePerfectWordsInARow = 100;
 
   // Timer logic
   useEffect(() => {
@@ -52,7 +60,7 @@ export default function GameWords() {
     setWordsRemaining(listOfWords.length);
   }, [listOfWords, wordsRemaining]);
 
-  const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
+
   useEffect(() => {
     const newWordAsUnderscores = Array.from(
       { length: wordToGuess.length },
@@ -66,12 +74,15 @@ export default function GameWords() {
     let index = 0;
     setWordIndex(index);
   }
-
+  
+  // Dealing with the keyboard inputs, updating the score and the display
   function listenInputsWriteOutputs(event) {
     const keyPressed = event.key;
     if (/\p{Letter}/u.test(keyPressed) && keyPressed.length === 1) {
       // Update the next score and the display based on the key pressed
       if (keyPressed === wordToGuess[wordIndex]) {
+        setScore((prevScore) => prevScore + 1);
+        setWordScore((prevWordScore) => prevWordScore + 1);
         wordAsUnderscores[wordIndex] = (
           <React.Fragment key={`correct-${wordIndex}-${keyPressed}`}>
             <span>{keyPressed}</span>
@@ -79,6 +90,9 @@ export default function GameWords() {
           </React.Fragment>
         );
       } else {
+        setScore((prevScore) => prevScore - 1);
+        let reset = 0;
+        setperfectWordsInARow(reset);
         wordAsUnderscores[wordIndex] = (
           <React.Fragment key={`wrong-${wordIndex}-${keyPressed}`}>
             <span className="wrong-letter">{keyPressed}</span>
@@ -94,14 +108,41 @@ export default function GameWords() {
       }
     }
   }
-
   useKeyboardInput(listenInputsWriteOutputs, showWordsContainer);
+
+  // Reseting wordScore
+  useEffect(() => {
+    if (wordToGuess.length > 0) {
+      setWordScore(0); // Reset word score
+    }
+  }, [wordToGuess]);
+
+  // Dealing with perfect score
+  useEffect(() => {
+    if (wordToGuess.length > 0 && wordScore === wordToGuess.length) {
+      setScore((prevScore) => prevScore + perfectWord);
+      setperfectWordsInARow(
+        (prevPerfectWordsInARow) => prevPerfectWordsInARow + 1
+      );
+      setWordScore(0); // Reset word score for the next word
+    }
+    if (perfectWordsInARow === 3) {
+      setScore((prevScore) => prevScore + threePerfectWordsInARow);
+      let reset = 0;
+      setperfectWordsInARow(reset);
+    }
+  }, [wordToGuess, wordScore, perfectWordsInARow]);
 
   return (
     <div className={`game-background game-background-${theme}`}>
       <div className="game-image-and-game-container">
         <RenderImage theme={theme} />
         <div className="game-container">
+          <p>Words remaining in the list: {wordsRemaining}</p>
+          <p>Perfect words in a row: {perfectWordsInARow}</p>
+
+          <p>Score: {score}</p>
+
           <Timer />
           <Countdown />
           {showWordsContainer && (
@@ -110,10 +151,7 @@ export default function GameWords() {
               <div className="game-word-being-written">{wordAsUnderscores}</div>
             </div>
           )}
-          <div className="stats">
-            <p>Words remaining in the list: {wordsRemaining}</p>
-            <p>New list: {wordsRemaining}</p>
-          </div>
+          <div className="stats"></div>
         </div>
       </div>
     </div>

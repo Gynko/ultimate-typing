@@ -32,7 +32,7 @@ export function useListOfWords(theme, wordToRemove) {
           return list; // Return the original list
         }
         return newList;
-      });
+      });     
     }
   }, [wordToRemove]);
 
