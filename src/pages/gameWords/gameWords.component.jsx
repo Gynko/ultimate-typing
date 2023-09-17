@@ -46,11 +46,11 @@ export default function GameWords() {
         clearInterval(timerId);
       }
     };
-  }, [showWordsContainer]);
+  }, [showWordsContainer, setTimer]);
 
   useEffect(() => {
     setWordsRemaining(listOfWords.length);
-  }, [listOfWords]);
+  }, [listOfWords, wordsRemaining]);
 
   const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
   useEffect(() => {
@@ -102,7 +102,6 @@ export default function GameWords() {
       <div className="game-image-and-game-container">
         <RenderImage theme={theme} />
         <div className="game-container">
-          <p>Words remaining: {wordsRemaining}</p>
           <Timer />
           <Countdown />
           {showWordsContainer && (
@@ -111,6 +110,10 @@ export default function GameWords() {
               <div className="game-word-being-written">{wordAsUnderscores}</div>
             </div>
           )}
+          <div className="stats">
+            <p>Words remaining in the list: {wordsRemaining}</p>
+            <p>New list: {wordsRemaining}</p>
+          </div>
         </div>
       </div>
     </div>
