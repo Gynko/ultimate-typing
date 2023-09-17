@@ -6,15 +6,18 @@ import "./gameWords.styles.css";
 import Timer from "../../components/timer/timer.component";
 import Countdown from "../../components/countdown/countdown.component";
 import RenderImage from "../../components/renderImage/renderImage.components";
+import Score from "../../components/Score/score.component";
 // Hooks bonanza
 import { useShowCountdown } from "../../hooks/useShowCountdown";
 import { useRandomWord } from "../../hooks/useRandomWord";
 import { useKeyboardInput } from "../../hooks/useKeyboardInput";
 import { useListOfWords } from "../../hooks/useListOfWords";
+import Button3d from "../../components/button-3d/button-3d.component";
 
 export default function GameWords() {
   const contextData = useContext(MyContext);
-  const { theme, timer, setTimer } = contextData;
+  const { theme, timer, setTimer, gameOver, setGameOver, resetGame, page } =
+    contextData;
 
   const showWordsContainer = useShowCountdown(3000);
 
@@ -60,7 +63,6 @@ export default function GameWords() {
     setWordsRemaining(listOfWords.length);
   }, [listOfWords, wordsRemaining]);
 
-
   useEffect(() => {
     const newWordAsUnderscores = Array.from(
       { length: wordToGuess.length },
@@ -74,11 +76,15 @@ export default function GameWords() {
     let index = 0;
     setWordIndex(index);
   }
-  
+
   // Dealing with the keyboard inputs, updating the score and the display
   function listenInputsWriteOutputs(event) {
     const keyPressed = event.key;
-    if (/\p{Letter}/u.test(keyPressed) && keyPressed.length === 1) {
+    if (
+      /\p{Letter}/u.test(keyPressed) &&
+      keyPressed.length === 1 &&
+      !gameOver
+    ) {
       // Update the next score and the display based on the key pressed
       if (keyPressed === wordToGuess[wordIndex]) {
         setScore((prevScore) => prevScore + 1);
@@ -133,25 +139,48 @@ export default function GameWords() {
     }
   }, [wordToGuess, wordScore, perfectWordsInARow]);
 
+  // When countdown reach 0
+  useEffect(() => {
+    if (timer === 0) {
+      setGameOver((previous) => true);
+    }
+  }, [timer]);
+
+  useEffect(() => {
+    resetGame();
+  }, [page]);
+
   return (
     <div className={`game-background game-background-${theme}`}>
       <div className="game-image-and-game-container">
         <RenderImage theme={theme} />
         <div className="game-container">
-          <p>Words remaining in the list: {wordsRemaining}</p>
-          <p>Perfect words in a row: {perfectWordsInARow}</p>
-
-          <p>Score: {score}</p>
-
-          <Timer />
-          <Countdown />
-          {showWordsContainer && (
-            <div className="game-words-container">
-              <p className="game-word-to-write">{wordToGuess.join("")}</p>
-              <div className="game-word-being-written">{wordAsUnderscores}</div>
+          {gameOver === false ? (
+            <>
+              <Score score={score} />
+              <Timer />
+              <Countdown />
+              {showWordsContainer && (
+                <div className="game-words-container">
+                  <p className="game-word-to-write">{wordToGuess.join("")}</p>
+                  <div className="game-word-being-written">
+                    {wordAsUnderscores}
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="game-over-container">
+              <h2 className="game-over-title">Game over!</h2>
+              <p className="game-over-score">Score: {score}</p>
+              <Button3d
+                color={"green"}
+                size="big"
+                text="To Leaderboard"
+                type="button"
+              />
             </div>
           )}
-          <div className="stats"></div>
         </div>
       </div>
     </div>

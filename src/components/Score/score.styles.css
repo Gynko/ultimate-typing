@@ -1,0 +1,20 @@
+.score-container {
+  width: 10rem; /* Set the width and height to the same value for a perfect circle */
+  height: 10rem;
+  background-color: rgb(255, 213, 0); /* Set the background color to green */
+  border-radius: 50%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-button);
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 3.5rem;
+  padding-top: 1rem;
+}
+
+.score-points {
+  font-size: 2rem;
+}

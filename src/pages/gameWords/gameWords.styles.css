@@ -20,8 +20,19 @@
   flex-flow: row nowrap;
 }
 
+.game-words-container {
+  margin-top: 5rem;
+}
 .game-image-container {
   height: calc(100vh - var(--size-header));
+  max-width: 30vw; /* Set maximum width */
+  overflow: hidden; /* Hide the overflow content */
+}
+
+.game-image-container img {
+  height: 100%;
+  object-fit: cover; /* Cover the entire container without distorting the image */
+  object-position: center; /* Center the image */
 }
 
 .game-container {
@@ -29,7 +40,9 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  margin-top: 7rem;
+  justify-content: center;
+  position: relative;
+  height: calc(100vh - var(--size-header));
 }
 
 .game-word-to-write {
@@ -81,5 +94,29 @@
 }
 
 .stats {
-  margin-top: 2rem;
+  position: fixed;
+  bottom: 3rem;
+}
+
+.words-remaining {
+  font-family: var(--font-button);
+  font-size: 3rem;
+  text-align: center;
+}
+.perfect-words {
+  font-family: var(--font-button);
+  font-size: 3rem;
+  text-align: center;
+}
+
+.game-over-title {
+  text-align: center;
+  font-family: var(--font-button);
+  font-size: 3rem;
+}
+
+.game-over-score {
+  text-align: center;
+  font-family: var(--font-text);
+  font-size: 3rem;
 }

@@ -13,13 +13,19 @@ function App() {
   const [currentUser, setCurrentUser] = useState("Bobby");
   const [gameMode, setGameMode] = useState("game-words");
   const [theme, setTheme] = useState("cancerAwareness");
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(10);
+  const [gameOver, setGameOver] = useState(false);
 
   function pageRender() {
     if (page === "home") return <Home />;
     else if (page === "select-game") return <SelectGame />;
     else if (page === "select-theme") return <SelectTheme />;
     else if (page === "game-words") return <GameWords />;
+  }
+
+  function resetGame() {
+    setTimer(10);
+    setGameOver(false);
   }
 
   return (
@@ -34,6 +40,9 @@ function App() {
         setTheme,
         timer,
         setTimer,
+        resetGame,
+        gameOver,
+        setGameOver,
       }}
     >
       <div>

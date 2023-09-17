@@ -1,4 +1,6 @@
 .countdown-container {
+  position: absolute;
+  top: 8rem;
   width: 20rem;
   height: 5rem;
   display: flex;
@@ -6,6 +8,7 @@
   align-items: center;
   border-radius: 20px;
   background-color: white;
+  margin-top: 12rem;
 }
 
 .countdown {
@@ -16,15 +19,15 @@
 }
 
 .countdown-3 {
-    border: 0.5rem solid red;
+  border: 0.5rem solid red;
 }
 
 .countdown-2 {
-    border: 0.5rem solid rgb(255, 153, 0);
+  border: 0.5rem solid rgb(255, 153, 0);
 }
 
 .countdown-1 {
-    border: 0.5rem solid rgb(251, 255, 3);
+  border: 0.5rem solid rgb(251, 255, 3);
 }
 
 .countdown-0 {
