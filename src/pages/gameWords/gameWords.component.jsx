@@ -16,8 +16,17 @@ import Button3d from "../../components/button-3d/button-3d.component";
 
 export default function GameWords() {
   const contextData = useContext(MyContext);
-  const { theme, timer, setTimer, gameOver, setGameOver, resetGame, page } =
-    contextData;
+  const {
+    theme,
+    timer,
+    setTimer,
+    gameOver,
+    setGameOver,
+    resetGame,
+    page,
+    score,
+    setScore,
+  } = contextData;
 
   const showWordsContainer = useShowCountdown(3000);
 
@@ -25,12 +34,12 @@ export default function GameWords() {
   const [wordsRemaining, setWordsRemaining] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
   const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
+  const [leaderboardUpdated, setLeaderboardUpdated] = useState(false);
 
   let listOfWords = useListOfWords(theme, wordToRemove);
   const wordToGuess = useRandomWord(theme, listOfWords);
 
   // Score
-  const [score, setScore] = useState(0);
   const [perfectWordsInARow, setperfectWordsInARow] = useState(0);
   const [wordScore, setWordScore] = useState(0);
   const perfectWord = 50;
@@ -137,14 +146,38 @@ export default function GameWords() {
       let reset = 0;
       setperfectWordsInARow(reset);
     }
-  }, [wordToGuess, wordScore, perfectWordsInARow]);
+  }, [wordToGuess, wordScore, perfectWordsInARow, setScore]);
 
   // When countdown reach 0
   useEffect(() => {
     if (timer === 0) {
       setGameOver((previous) => true);
     }
-  }, [timer]);
+  }, [timer, setGameOver]);
+
+  // Save score when the game is over
+  useEffect(() => {
+    if (gameOver && !leaderboardUpdated) {
+      const leaderboard = JSON.parse(
+        localStorage.getItem("leaderboard") || "[]"
+      );
+      leaderboard.push({
+        name: contextData.currentUser,
+        theme: contextData.theme,
+        score: score,
+      });
+      leaderboard.sort((a, b) => b.score - a.score);
+      localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+
+      setLeaderboardUpdated(true); // set the flag to true
+    }
+  }, [
+    gameOver,
+    score,
+    contextData.currentUser,
+    contextData.theme,
+    leaderboardUpdated,
+  ]);
 
   useEffect(() => {
     resetGame();

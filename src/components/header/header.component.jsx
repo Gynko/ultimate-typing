@@ -60,10 +60,10 @@ export default function Header() {
             >
               <Button3d
                 color="yellow"
-                to="select-game"
+                to="leaderboard"
                 size="small"
-                text="Leaderboard"
-                click={() => gotoLink("trivia")}
+                text="leaderboard"
+                click={() => gotoLink("leaderboard")}
               />
             </li>
           </div>
