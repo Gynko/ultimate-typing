@@ -50,6 +50,12 @@
   padding: 0.8rem 1rem 0 1rem;
 }
 
+.lb-li-score,
+.lb-li-theme {
+  font-family: var(--font-text);
+  padding-top: 1.2rem;
+}
+
 .lb-li-name {
   font-family: var(--font-button);
   line-height: 4rem;

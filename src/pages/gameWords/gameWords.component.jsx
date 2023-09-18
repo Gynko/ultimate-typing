@@ -24,6 +24,7 @@ export default function GameWords() {
     setGameOver,
     resetGame,
     page,
+    setPage,
     score,
     setScore,
     leaderboardUpdated,
@@ -219,6 +220,7 @@ export default function GameWords() {
                 size="big"
                 text="To Leaderboard"
                 type="button"
+                click={() => setPage("leaderboard")}
               />
             </div>
           )}
