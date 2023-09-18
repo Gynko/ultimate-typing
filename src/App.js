@@ -10,11 +10,12 @@ import Leaderboard from "./pages/leaderboard/leaderboard.page";
 export const MyContext = createContext();
 
 function App() {
-  const [page, setPage] = useState("game-words");
+  const [page, setPage] = useState("leaderboard");
   const [currentUser, setCurrentUser] = useState("Bobby");
   const [gameMode, setGameMode] = useState("game-words");
   const [theme, setTheme] = useState("cancerAwareness");
-  const [timer, setTimer] = useState(10);
+  const TIMER = 45;
+  const [timer, setTimer] = useState(TIMER);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const [leaderboardUpdated, setLeaderboardUpdated] = useState(false);
@@ -28,7 +29,7 @@ function App() {
   }
 
   function resetGame() {
-    setTimer(10);
+    setTimer(TIMER);
     setGameOver(false);
     setScore(0);
     setLeaderboardUpdated(false);

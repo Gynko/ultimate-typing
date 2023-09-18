@@ -1,3 +1,56 @@
 .leaderboard-container {
   margin-top: var(--size-header);
+  background: linear-gradient(197deg, #58bfeb 11.32%, #23a47d 88.2%);
+  min-height: calc(100vh - var(--size-header));
+  display: flex;
+  width: 100%;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.leaderboard-container > :first-child {
+  margin: 4rem 0;
+}
+
+.leaderboard-ul > :first-child {
+  background-color: gold;
+}
+
+.leaderboard-ul > :nth-child(2) {
+  background-color: #e0dddd;
+}
+
+.leaderboard-ul > :nth-child(3) {
+  background-color: #f8bd53;
+  margin-bottom: 4rem;
+}
+
+.leaderboard-ul {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+.leaderboard-h2 {
+  font-family: var(--font-button);
+  font-size: 3rem;
+  margin: 3rem 0;
+  height: 3rem;
+}
+
+.leaderboard-li {
+  display: flex;
+  flex-flow: row nowrap;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.lb-li-items {
+  width: 25rem;
+  font-size: 2.5rem;
+  padding: 0.8rem 1rem 0 1rem;
+}
+
+.lb-li-name {
+  font-family: var(--font-button);
+  line-height: 4rem;
 }

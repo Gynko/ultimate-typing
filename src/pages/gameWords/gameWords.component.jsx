@@ -44,6 +44,7 @@ export default function GameWords() {
 
   const [perfectWordsInARow, setPerfectWordsInARow] = useState(0);
   const [wordScore, setWordScore] = useState(0);
+  const [pointsLost, setPointsLost] = useState(0);
   const perfectWord = 50;
   const threePerfectWordsInARow = 100;
 
@@ -103,7 +104,11 @@ export default function GameWords() {
           </React.Fragment>
         );
       } else {
-        setScore((prevScore) => prevScore - 1);
+        // Conditionally update the score based on points lost
+        if (pointsLost < 5) {
+          setScore((prevScore) => prevScore - 1);
+          setPointsLost((prevPointsLost) => prevPointsLost + 1);
+        }
         let reset = 0;
         setPerfectWordsInARow(reset);
         wordAsUnderscores[wordIndex] = (
@@ -113,6 +118,7 @@ export default function GameWords() {
           </React.Fragment>
         );
       }
+
       let newWordIndex = wordIndex + 1;
       setWordIndex(newWordIndex);
       if (newWordIndex === wordToGuess.length) {
@@ -121,11 +127,13 @@ export default function GameWords() {
       }
     }
   }
+
   useKeyboardInput(listenInputsWriteOutputs, showWordsContainer);
 
   useEffect(() => {
     if (wordToGuess.length > 0) {
       setWordScore(0);
+      setPointsLost(0); // Reset the points lost for the new word
     }
   }, [wordToGuess]);
 
