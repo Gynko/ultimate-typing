@@ -25,9 +25,11 @@ export default function Home() {
       <img src={TypewriterBig} alt="typewriter logo" width="500" height="500" />
       <form className="inputs-container" onSubmit={handleSubmit}>
         <InputText
-          placeholder="you have a name?"
+          placeholder=""
+          label="Name thyself, brave typing adventurer!"
           onChange={handleInputChange}
           value={inputValue}
+          autoFocus={true}
           type="text"
         />
         <Button3d

@@ -10,7 +10,7 @@ import Leaderboard from "./pages/leaderboard/leaderboard.page";
 export const MyContext = createContext();
 
 function App() {
-  const [page, setPage] = useState("leaderboard");
+  const [page, setPage] = useState("select-game");
   const [currentUser, setCurrentUser] = useState("Bobby");
   const [gameMode, setGameMode] = useState("game-words");
   const [theme, setTheme] = useState("cancerAwareness");
