@@ -7,7 +7,7 @@ import Timer from "../../components/timer/timer.component";
 import Countdown from "../../components/countdown/countdown.component";
 import RenderImage from "../../components/renderImage/renderImage.components";
 import Score from "../../components/Score/score.component";
-// Hooks bonanza
+// Hooks
 import { useShowCountdown } from "../../hooks/useShowCountdown";
 import { useRandomWord } from "../../hooks/useRandomWord";
 import { useKeyboardInput } from "../../hooks/useKeyboardInput";
@@ -26,6 +26,8 @@ export default function GameWords() {
     page,
     score,
     setScore,
+    leaderboardUpdated,
+    setLeaderboardUpdated,
   } = contextData;
 
   const showWordsContainer = useShowCountdown(3000);
@@ -34,22 +36,20 @@ export default function GameWords() {
   const [wordsRemaining, setWordsRemaining] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
   const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
-  const [leaderboardUpdated, setLeaderboardUpdated] = useState(false);
+
+  const [updatingLeaderboard, setUpdatingLeaderboard] = useState(false);
 
   let listOfWords = useListOfWords(theme, wordToRemove);
   const wordToGuess = useRandomWord(theme, listOfWords);
 
-  // Score
-  const [perfectWordsInARow, setperfectWordsInARow] = useState(0);
+  const [perfectWordsInARow, setPerfectWordsInARow] = useState(0);
   const [wordScore, setWordScore] = useState(0);
   const perfectWord = 50;
   const threePerfectWordsInARow = 100;
 
-  // Timer logic
   useEffect(() => {
     let timerId;
     if (showWordsContainer) {
-      // Only start the timer after the initial countdown
       timerId = setInterval(() => {
         setTimer((prevTimer) => {
           if (prevTimer > 0) {
@@ -86,7 +86,6 @@ export default function GameWords() {
     setWordIndex(index);
   }
 
-  // Dealing with the keyboard inputs, updating the score and the display
   function listenInputsWriteOutputs(event) {
     const keyPressed = event.key;
     if (
@@ -94,7 +93,6 @@ export default function GameWords() {
       keyPressed.length === 1 &&
       !gameOver
     ) {
-      // Update the next score and the display based on the key pressed
       if (keyPressed === wordToGuess[wordIndex]) {
         setScore((prevScore) => prevScore + 1);
         setWordScore((prevWordScore) => prevWordScore + 1);
@@ -107,7 +105,7 @@ export default function GameWords() {
       } else {
         setScore((prevScore) => prevScore - 1);
         let reset = 0;
-        setperfectWordsInARow(reset);
+        setPerfectWordsInARow(reset);
         wordAsUnderscores[wordIndex] = (
           <React.Fragment key={`wrong-${wordIndex}-${keyPressed}`}>
             <span className="wrong-letter">{keyPressed}</span>
@@ -125,39 +123,37 @@ export default function GameWords() {
   }
   useKeyboardInput(listenInputsWriteOutputs, showWordsContainer);
 
-  // Reseting wordScore
   useEffect(() => {
     if (wordToGuess.length > 0) {
-      setWordScore(0); // Reset word score
+      setWordScore(0);
     }
   }, [wordToGuess]);
 
-  // Dealing with perfect score
   useEffect(() => {
     if (wordToGuess.length > 0 && wordScore === wordToGuess.length) {
       setScore((prevScore) => prevScore + perfectWord);
-      setperfectWordsInARow(
+      setPerfectWordsInARow(
         (prevPerfectWordsInARow) => prevPerfectWordsInARow + 1
       );
-      setWordScore(0); // Reset word score for the next word
+      setWordScore(0);
     }
     if (perfectWordsInARow === 3) {
       setScore((prevScore) => prevScore + threePerfectWordsInARow);
       let reset = 0;
-      setperfectWordsInARow(reset);
+      setPerfectWordsInARow(reset);
     }
   }, [wordToGuess, wordScore, perfectWordsInARow, setScore]);
 
-  // When countdown reach 0
   useEffect(() => {
     if (timer === 0) {
-      setGameOver((previous) => true);
+      setGameOver(true);
     }
   }, [timer, setGameOver]);
 
-  // Save score when the game is over
   useEffect(() => {
-    if (gameOver && !leaderboardUpdated) {
+    if (gameOver && !leaderboardUpdated && !updatingLeaderboard) {
+      setUpdatingLeaderboard(true); // Acquire the lock
+
       const leaderboard = JSON.parse(
         localStorage.getItem("leaderboard") || "[]"
       );
@@ -170,17 +166,21 @@ export default function GameWords() {
       localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
 
       setLeaderboardUpdated(true); // set the flag to true
+
+      setUpdatingLeaderboard(false); // Release the lock
     }
   }, [
     gameOver,
-    score,
     contextData.currentUser,
     contextData.theme,
+    score,
     leaderboardUpdated,
+    updatingLeaderboard,
   ]);
 
   useEffect(() => {
     resetGame();
+    setLeaderboardUpdated(false);
   }, [page]);
 
   return (

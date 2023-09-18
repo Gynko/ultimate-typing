@@ -17,6 +17,7 @@ function App() {
   const [timer, setTimer] = useState(10);
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
+  const [leaderboardUpdated, setLeaderboardUpdated] = useState(false);
 
   function pageRender() {
     if (page === "home") return <Home />;
@@ -30,6 +31,7 @@ function App() {
     setTimer(10);
     setGameOver(false);
     setScore(0);
+    setLeaderboardUpdated(false);
   }
 
   return (
@@ -41,6 +43,8 @@ function App() {
         gameMode,
         setGameMode,
         theme,
+        leaderboardUpdated,
+        setLeaderboardUpdated,
         setTheme,
         timer,
         setTimer,
