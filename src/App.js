@@ -9,10 +9,10 @@ import Leaderboard from "./pages/leaderboard/leaderboard.page";
 export const MyContext = createContext();
 
 function App() {
-  const [page, setPage] = useState("select-game");
+  const [page, setPage] = useState("game-words");
   const [currentUser, setCurrentUser] = useState("Nils");
-  const [gameMode, setGameMode] = useState("");
-  const [theme, setTheme] = useState("");
+  const [gameMode, setGameMode] = useState("game-words");
+  const [theme, setTheme] = useState("oktoberfest");
   const TIMER = 45;
   const [timer, setTimer] = useState(TIMER);
   const [gameOver, setGameOver] = useState(false);

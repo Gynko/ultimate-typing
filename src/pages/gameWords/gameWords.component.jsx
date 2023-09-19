@@ -1,13 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { MyContext } from "../../App";
-// Styles
 import "./gameWords.styles.css";
-// Components
 import Timer from "../../components/timer/timer.component";
 import Countdown from "../../components/countdown/countdown.component";
 import RenderImage from "../../components/renderImage/renderImage.components";
 import Score from "../../components/Score/score.component";
-// Hooks
 import { useShowCountdown } from "../../hooks/useShowCountdown";
 import { useRandomWord } from "../../hooks/useRandomWord";
 import { useKeyboardInput } from "../../hooks/useKeyboardInput";
@@ -32,17 +29,15 @@ export default function GameWords() {
   } = contextData;
 
   const showWordsContainer = useShowCountdown(3000);
-
   const [wordToRemove, setWordToRemove] = useState(null);
   const [wordsRemaining, setWordsRemaining] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
   const [wordAsUnderscores, setWordAsUnderscores] = useState([]);
-
+  const [wordCompleted, setWordCompleted] = useState(false);
   const [updatingLeaderboard, setUpdatingLeaderboard] = useState(false);
 
   let listOfWords = useListOfWords(theme, wordToRemove);
   const wordToGuess = useRandomWord(theme, listOfWords);
-
   const [perfectWordsInARow, setPerfectWordsInARow] = useState(0);
   const [wordScore, setWordScore] = useState(0);
   const [pointsLost, setPointsLost] = useState(0);
@@ -72,7 +67,7 @@ export default function GameWords() {
 
   useEffect(() => {
     setWordsRemaining(listOfWords.length);
-  }, [listOfWords, wordsRemaining]);
+  }, [listOfWords]);
 
   useEffect(() => {
     const newWordAsUnderscores = Array.from(
@@ -80,16 +75,31 @@ export default function GameWords() {
       () => "_"
     );
     setWordAsUnderscores(newWordAsUnderscores);
+    setWordCompleted(false);
   }, [wordToGuess]);
 
   function removeWordFromList(word) {
     setWordToRemove(word);
-    let index = 0;
-    setWordIndex(index);
+    setWordIndex(0);
   }
 
   function listenInputsWriteOutputs(event) {
     const keyPressed = event.key;
+    if (wordCompleted && keyPressed !== " ") {
+      return;
+    }
+    if (keyPressed === " ") {
+      if (wordCompleted) {
+        let word = wordToGuess.join("");
+        removeWordFromList(word);
+        setWordCompleted(false);
+      } else {
+        setScore((prevScore) => prevScore - 1);
+        let word = wordToGuess.join("");
+        removeWordFromList(word);
+      }
+      return;
+    }
     if (
       /\p{Letter}/u.test(keyPressed) &&
       keyPressed.length === 1 &&
@@ -123,8 +133,7 @@ export default function GameWords() {
       let newWordIndex = wordIndex + 1;
       setWordIndex(newWordIndex);
       if (newWordIndex === wordToGuess.length) {
-        let word = wordToGuess.join("");
-        removeWordFromList(word);
+        setWordCompleted(true);
       }
     }
   }
