@@ -1,16 +1,39 @@
-.select-game-background {
+.select-game-theme-background {
   margin-top: var(--size-header);
-  background: linear-gradient(197deg, #58bfeb 11.32%, #23a47d 88.2%);
-  min-height: calc(100vh - var(--size-header));
-  display: flex;
+  background: linear-gradient(197deg, #ffdd93 11.32%, #ce5739 88.2%);
+  height: calc(100vh - var(--size-header));
+  display: grid;
+  grid-template-rows: auto 1fr; /* Two rows: h1 and containers */
+  grid-template-columns: 1fr 1fr; /* Two columns to place the containers side by side */
   width: 100%;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  gap: 4rem;
+  justify-items: center;
 }
 
-.main-title {
-  font-family: var(--font-logo-ultimate);
-  margin-top: 1rem;
+.select-container {
+  grid-row: 2; /* Both select-container go to the second row */
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.select-container:first-child {
+  grid-column: 2; /* First select-container goes to the first column */
+}
+
+.select-container:nth-child(2) {
+  grid-column: 1; /* Second select-container goes to the second column */
+}
+
+.select-game-hello-message {
+  grid-row: 1; /* h1 goes to the first row */
+  grid-column: 1 / span 2; /* Span both columns */
+  font-size: 5rem;
+  font-family: var(--font-button);
+  color: black;
+  text-align: center;
+  place-self: center; /* Centers both horizontally and vertically */
+  margin: 8rem 0;
+}
+
+.select-theme {
+  margin-top: 3rem;
 }

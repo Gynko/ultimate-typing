@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { MyContext } from "../../App";
 import "./gameMode.styles.css";
 
@@ -8,22 +8,34 @@ export default function GameMode({
   description,
   image,
   alt,
+  game,
 }) {
   const contextData = useContext(MyContext);
-  const { setGameMode, setPage } = contextData;
+  const { gameMode, setGameMode } = contextData;
+  const [isSelected, setIsSelected] = useState(false);
+
+  useEffect(() => {
+    setIsSelected(gameMode === game); // Compare to the 'game' prop
+  }, [gameMode, game]);
 
   function onButtonClick(value) {
     setGameMode(value);
-    setPage("select-theme");
   }
+
   return (
     <div className="gamemode-container">
       {orientation === "right" ? (
         <button
           className="gamemode-button"
-          onClick={() => onButtonClick("game-words")}
+          value={game} // Use 'game' prop here
+          onClick={() => onButtonClick(game)} // Use 'game' prop here
         >
-          <img className="gamemode-picture" src={image} width="150" alt={alt} />
+          <img
+            className={`gamemode-picture ${isSelected ? "selected" : ""}`}
+            src={image}
+            width="150"
+            alt={alt}
+          />
           <div
             className={`gamemode-text-container gamemode-text-container-${orientation}`}
           >
@@ -31,20 +43,7 @@ export default function GameMode({
             <p className="gamemode-text-p">{description}</p>
           </div>
         </button>
-      ) : (
-        <button
-          className="gamemode-button"
-          onClick={() => onButtonClick("game-trivia")}
-        >
-          <div
-            className={`gamemode-text-container gamemode-text-container-${orientation}`}
-          >
-            <h2 className="gamemode-text-h2">{title}</h2>
-            <p className="gamemode-text-p">{description}</p>
-          </div>
-          <img className="gamemode-picture" src={image} width="150" alt={alt} />
-        </button>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -23,22 +23,27 @@ export default function Home() {
   return (
     <div className="home-background">
       <img src={TypewriterBig} alt="typewriter logo" width="500" height="500" />
-      <form className="inputs-container" onSubmit={handleSubmit}>
-        <InputText
-          placeholder=""
-          label="Name thyself, brave typing adventurer!"
-          onChange={handleInputChange}
-          value={inputValue}
-          autoFocus={true}
-          type="text"
-        />
-        <Button3d
-          color={inputValue === "" ? "grey" : "green"}
-          size="big"
-          text="enter"
-          type={inputValue === "" ? "button" : "submit"}
-        />
-      </form>
+      <div className="home-right-container">
+        <h1 className="home-logo-text-above">
+          Ultimate <span className="home-logo-text-under">typing</span>
+        </h1>
+        <form className="inputs-container" onSubmit={handleSubmit}>
+          <InputText
+            placeholder=""
+            label="Name thyself, brave typing hero!"
+            onChange={handleInputChange}
+            value={inputValue}
+            autoFocus={true}
+            type="text"
+          />
+          <Button3d
+            color={inputValue === "" ? "grey" : "green"}
+            size="big"
+            text="enter"
+            type={inputValue === "" ? "button" : "submit"}
+          />
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,18 +1,42 @@
 .home-background {
   margin-top: var(--size-header);
-  background: linear-gradient(197deg, #58bfeb 11.32%, #23a47d 88.2%);
+  background: linear-gradient(197deg, #ffdd93 11.32%, #ce5739 88.2%);
   min-height: calc(100vh - var(--size-header));
   display: flex;
   width: 100%;
   flex-flow: row nowrap;
   align-items: center;
+  justify-content: center;
   justify-content: space-evenly;
 }
 
 .inputs-container {
   display: flex;
   flex-flow: column nowrap;
-  width: 45vw;
+  width: 100%;
   align-items: center;
   gap: 2rem;
+}
+
+.home-right-container {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 45vw;
+  gap: 3rem;
+}
+
+.home-logo-text-above {
+  font-size: clamp(8rem, 2vw, 2rem);
+  font-family: var(--font-logo-ultimate);
+  text-align: center;
+  margin-bottom: 3rem;
+  width: 100%;
+  line-height: 8rem;
+}
+
+.home-logo-text-under {
+  display: block;
+  font-size: clamp(7.5rem, 2vw, 2rem);
+  font-family: var(--font-text);
+  text-align: center;
 }

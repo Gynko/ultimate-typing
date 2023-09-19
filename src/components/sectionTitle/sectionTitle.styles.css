@@ -20,4 +20,5 @@
   flex-flow: column nowrap;
   justify-content: center;
   z-index: 0;
+  margin-bottom: 3rem;
 }

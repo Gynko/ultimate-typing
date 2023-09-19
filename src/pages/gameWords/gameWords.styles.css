@@ -77,10 +77,10 @@
   height: 2rem;
   position: absolute;
   padding-top: 0.4rem;
-  transform: translateY(3.4rem) translateX(-3rem);
   text-align: center;
   font-size: 1rem;
   letter-spacing: 0.2rem;
+  transform: translateY(3.4rem) translateX(-3rem);
 }
 
 .correct-score {

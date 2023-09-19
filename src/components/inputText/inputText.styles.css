@@ -1,18 +1,23 @@
 .inputs-sk {
   width: 100%;
+  border: none;
+  text-align: center;
+  caret-color: orangered;
+  font-size: 2rem;
+}
+
+::selection {
+  background-color: rgb(255, 86, 24);
+  color: white;
 }
 
 .inputs-sk::placeholder {
   color: rgb(59, 53, 47);
 }
 
-.inputs-sk {
-  border: none;
-  text-align: center;
-}
-
 .input-text {
-  font-size: 2rem;
+  width: 100%;
+  font-size: 3rem;
   height: 5rem;
   border-radius: 15px;
   font-family: "Courier Prime", monospace;
@@ -25,10 +30,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .input-label {
-  margin-bottom: 10px;
-  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-size: clamp(1rem, 1.8vw, 3rem);
   font-family: "Courier Prime", monospace;
 }

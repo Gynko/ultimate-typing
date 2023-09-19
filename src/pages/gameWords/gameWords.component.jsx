@@ -101,7 +101,7 @@ export default function GameWords() {
         wordAsUnderscores[wordIndex] = (
           <React.Fragment key={`correct-${wordIndex}-${keyPressed}`}>
             <span>{keyPressed}</span>
-            <div className="score-display correct-score ">+1</div>
+            <div className={`score-display correct-score `}>+1</div>
           </React.Fragment>
         );
       } else {
