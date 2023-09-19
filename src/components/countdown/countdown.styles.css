@@ -10,7 +10,13 @@
   background-color: white;
   margin-top: 12rem;
 }
-
+.countdown-container-all {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
 .countdown {
   font-family: var(--font-button);
   font-size: 3rem;

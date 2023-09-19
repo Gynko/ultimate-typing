@@ -4,6 +4,7 @@ import "./countdown.styles.css";
 export default function Countdown() {
   const [timer, setTimer] = useState(3);
   const [containerOpacity, setContainerOpacity] = useState(1);
+  const [showInstruction, setShowInstruction] = useState(true); // New state variable
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
@@ -19,27 +20,41 @@ export default function Countdown() {
 
   useEffect(() => {
     if (timer === 0) {
-      // When timer reaches 0, start fading out the container
       const opacityInterval = setInterval(() => {
         if (containerOpacity > 0) {
           setContainerOpacity((prevOpacity) => prevOpacity - 0.01);
+          setShowInstruction(false); // Hide the instruction
         } else {
           clearInterval(opacityInterval);
         }
-      }, 10); // Adjust the interval time as needed for smoother animation
+      }, 10);
     }
   }, [timer, containerOpacity]);
 
   return (
-    <div
-      className={`countdown-container countdown-${timer}`}
-      style={{
-        opacity: containerOpacity,
-        transition: "opacity 0.5s ease", // Smooth fade-out transition
-        display: timer === 0 && containerOpacity === 0 ? "none" : "flex", // Hide the container when timer is 0 and opacity is 0
-      }}
-    >
-      <p className="countdown">{timer}</p>
+    <div className="countdown-container-all">
+      <div
+        className={`countdown-container countdown-${timer}`}
+        style={{
+          opacity: containerOpacity,
+          transition: "opacity 0.5s ease",
+          display: timer === 0 && containerOpacity === 0 ? "none" : "flex",
+        }}
+      >
+        <p className="countdown">{timer !== 0 ? timer : "GO!"}</p>
+      </div>
+      {showInstruction && (
+        <h1
+          style={{
+            opacity: containerOpacity,
+            transition: "opacity 0.5s ease",
+            textAlign: "center",
+            fontFamily: "var(--font-text)",
+          }}
+        >
+          Press Spacebar when you are finished typing a word
+        </h1>
+      )}
     </div>
   );
 }
