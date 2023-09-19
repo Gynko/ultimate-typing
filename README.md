@@ -7,7 +7,11 @@
 
 # Assignment
 
-The assignment consisted in learning about how to architect components in React, and dealing with very intricate state management: keeping track of inputs, updating score, checking various conditions, adding conditionnal rendering, etc.
+The assignment consisted in learning about how to:
+
+1. Architect components in React
+2. Deal with hooks like useEffect. I also used Context and made some custom hooks to make things more tidy.
+3. Deal with very intricate state management: keeping track of inputs, updating score, checking various conditions, adding conditionnal rendering, etc.
 
 # Scope
 
