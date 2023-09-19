@@ -9,7 +9,7 @@ import Leaderboard from "./pages/leaderboard/leaderboard.page";
 export const MyContext = createContext();
 
 function App() {
-  const [page, setPage] = useState("");
+  const [page, setPage] = useState("home");
   const [currentUser, setCurrentUser] = useState("");
   const [gameMode, setGameMode] = useState("");
   const [theme, setTheme] = useState("");
