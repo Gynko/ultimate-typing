@@ -120,3 +120,7 @@
   font-family: var(--font-text);
   font-size: 3rem;
 }
+
+.penalty {
+  background: linear-gradient(197deg, #ff5656 11.32%, #480202 88.2%);
+}
