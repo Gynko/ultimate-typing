@@ -1,6 +1,6 @@
 import { useState, createContext } from "react";
 import "./globalStyles.css";
-import Home from "./pages/home/Home.component.jsx";
+import Home from "./pages/Home/Home.component.jsx";
 import Header from "./components/header/header.component.jsx";
 import SelectGame from "./pages/selectGame/selectGame.component";
 import GameWords from "./pages/gameWords/gameWords.component";
